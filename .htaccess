@@ -1,0 +1,33 @@
+#Options +FollowSymlinks
+# Turn rewrite engine on
+RewriteEngine on
+# Cors
+Header always set Access-Control-Allow-Origin "*"
+Header always set Access-Control-Allow-Headers "Origin, X-Requested-With, Content-Type, Access-Control-Allow-Origin"
+Header always set Access-Control-Allow-Methods "PUT, GET, POST, DELETE, OPTIONS"
+
+# LOGIN 
+RewriteRule ^login index.php?url=login [L,QSA]
+
+#Client
+RewriteRule ^client/recover index.php?url=recover [L,QSA]
+RewriteRule ^client/register index.php?url=register [L,QSA]
+
+RewriteRule ^client/([0-9/]+) index.php?url=client&lead=$1 [L,QSA]
+RewriteRule ^client index.php?url=client [L,QSA]
+
+#Lead 
+RewriteRule ^lead/([0-9/]+) index.php?url=lead&lead=$1 [L,QSA]
+
+#Docs
+RewriteRule ^docs/base/([0-9/]+) index.php?url=docsbase&lead=$1 [L,QSA]
+RewriteRule ^docs/speed/([0-9/]+) index.php?url=speed&lead=$1 [L,QSA]
+
+RewriteRule ^docs/([0-9/]+)/([0-9/]+) index.php?url=doc&lead=$1&linha=$2 [L,QSA]
+RewriteRule ^docs/([0-9/]+) index.php?url=docs&lead=$1 [L,QSA]
+RewriteRule ^docs index.php?url=docs [L,QSA]
+
+
+
+
+
