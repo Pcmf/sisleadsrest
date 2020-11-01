@@ -41,6 +41,10 @@ class Lead {
     public function getLead($lead) {
         return $this->db->query("SELECT * FROM arq_leads WHERE id=:lead ", [':lead'=>$lead]);
     }
+    // get status
+    public function getLeadStatus($lead) {
+        return $this->db->query("SELECT status FROM arq_leads WHERE id=:lead ", [':lead'=>$lead])[0];
+    }
 
     /**
      */

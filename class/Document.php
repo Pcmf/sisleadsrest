@@ -77,10 +77,9 @@ class Document
         }
     }
 
-
     public function saveDoc($lead, $obj)
     {
-        // quando insere documento vai verificar se estão todos recebidos e se sim altera o status da lead para doc recebida 
+        // Guarda e se necessário converter a documentação para PDF
         if ($obj->type == 'pdf') {
             $fx64 = substr($obj->fx64, 28);
         } else {
@@ -109,14 +108,16 @@ class Document
                 ':lead' => $lead, ':linha' => $obj->linha
             ]
         );
-
-        // Verificar a sistuação da documentação pedida
-        if ($this->checkIsAllReceived($lead)) {
-            // Atualiza o status da lead como documentação toda recebida
-            $this->Client->updateStatus($lead, 36);
-        } else {
-            // aguarda documentação
-            $this->Client->updateStatus($lead, 38);
+        //Se a lead já estiver enviada para a analise não altera status
+        if (!($this->Lead->getLeadStatus($lead) > 10 && $this->Lead->getLeadStatus($lead) < 30)) {
+            // Verificar a situação da documentação pedida para atualizar os status
+            if ($this->checkIsAllReceived($lead)) {
+                // Atualiza o status da lead como documentação toda recebida
+                $this->Client->updateStatus($lead, 36);
+            } else {
+                // aguarda documentação
+                $this->Client->updateStatus($lead, 38);
+            }
         }
     }
 
